@@ -2,7 +2,6 @@ package mysql
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 
@@ -27,18 +26,16 @@ func New() MySqlService {
 		DBName:               "godb",
 		AllowNativePasswords: true,
 	}
+
 	// Get a database handle.
-	var err error
 	db, err := sql.Open("mysql", cfg.FormatDSN())
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	pingErr := db.Ping()
-	if pingErr != nil {
+	if pingErr := db.Ping(); pingErr != nil {
 		log.Fatal(pingErr)
 	}
-	fmt.Println("Connected!")
 
 	return &mySqlService{
 		db: db,
