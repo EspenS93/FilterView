@@ -20,7 +20,7 @@ func (service *mySqlService) GetPerson(id string) (personEdit, error) {
 	var person personEdit
 
 	row := service.db.QueryRow("SELECT * FROM person WHERE id = ?", id)
-	if err := row.Scan(&person.ID, &person.Avatar, &person.Email, &person.FirstName, &person.LastName); err != nil {
+	if err := row.Scan(&person.ID, &person.Email, &person.FirstName, &person.LastName, &person.Avatar); err != nil {
 		if err == sql.ErrNoRows {
 			return person, fmt.Errorf("GetPerson %q: no such person", id)
 		}
