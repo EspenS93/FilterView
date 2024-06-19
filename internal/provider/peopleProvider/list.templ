@@ -1,0 +1,53 @@
+package peopleProvider
+
+import (
+	"strconv"
+)
+
+templ list(page personPage) {
+	<div class={ "list", listGrow() } id="list">
+		<title>Filter View - Page { strconv.Itoa(page.Page) }</title>
+		<div>total: { strconv.Itoa(page.Total) }</div>
+		<div class={ listGrid() }>
+			for _, item := range page.People {
+				@listItem(item)
+			}
+		</div>
+		if page.Page > 1 {
+			<button hx-get={ "people?page=" + strconv.Itoa(page.Page-1) } hx-include="#filter">Prev</button>
+		}
+		<div>page: { strconv.Itoa(page.Page) }</div>
+		if page.Page < page.TotalPages {
+			<button hx-get={ "people?page=" + strconv.Itoa(page.Page+1) } hx-include="#filter">Next</button>
+		}
+	</div>
+}
+
+css listGrow() {
+	flex-grow: 1;
+}
+
+templ listItem(item person) {
+	<div class={ listItemClass() } hx-get={ "/person/" + strconv.Itoa(item.ID) } hx-target="main" hx-swap="innerHTML">
+		<div>ID: { strconv.Itoa(item.ID) }</div>
+		<div>First name: { item.FirstName }</div>
+		<div>Last name: { item.LastName }</div>
+		<div>Email: { item.Email }</div>
+		if item.Avatar != nil {
+			<img src={ *item.Avatar }/>
+		}
+	</div>
+}
+
+css listItemClass() {
+	border: 1px solid black;
+	cursor: pointer;
+}
+
+css listGrid() {
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+	grid-row-gap: 5rem;
+	grid-column-gap: 5rem;
+	
+}

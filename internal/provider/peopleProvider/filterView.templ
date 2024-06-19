@@ -1,0 +1,18 @@
+package peopleProvider
+
+import "github.com/EspenS93/filterview/cmd/web"
+
+templ filterViewPage(components ...templ.Component) {
+	@web.Base() {
+		<div class={ filterViewCss() } hx-target="#list" hx-swap="innerHTML" hx-push-url="true">
+			for _, c := range components {
+				@c
+			}
+		</div>
+	}
+}
+
+css filterViewCss() {
+	display: flex;
+	column-gap: 2rem;
+}

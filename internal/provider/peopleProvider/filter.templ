@@ -1,0 +1,47 @@
+package peopleProvider
+
+import elements "github.com/EspenS93/filterview/internal/elements/formelements"
+
+templ filter(checkedColors map[string]bool, checkedShapes map[string]bool) {
+	<div class="filter">
+		<form hx-trigger="change" id="filter" hx-get="/people">
+			@colors(checkedColors)
+			@shapes(checkedShapes)
+		</form>
+	</div>
+}
+
+templ colors(checkedColors map[string]bool) {
+	@elements.Fieldset() {
+		<legend>Colors</legend>
+		@colorCheckbox("red", checkedColors, "Red")
+		@colorCheckbox("blue", checkedColors, "Blue")
+		@colorCheckbox("green", checkedColors, "Green")
+		@colorCheckbox("yellow", checkedColors, "Yellow")
+		@colorCheckbox("purple", checkedColors, "Purple")
+		@colorCheckbox("white", checkedColors, "White")
+	}
+}
+
+templ checkableFilterInput(name string, value string, checkedValues map[string]bool, label string, inputType string) {
+	@elements.CheckableInput(name, value, checkedValues[value], inputType, label)
+}
+
+templ colorCheckbox(value string, checkedValues map[string]bool, label string) {
+	@checkableFilterInput("color", value, checkedValues, label, "checkbox")
+}
+
+templ shapeRadio(value string, checkedValues map[string]bool, label string) {
+	@checkableFilterInput("shape", value, checkedValues, label, "radio")
+}
+
+templ shapes(checkedShapes map[string]bool) {
+	@elements.Fieldset() {
+		<legend>Shapes</legend>
+		@shapeRadio("square", checkedShapes, "Square")
+		@shapeRadio("circle", checkedShapes, "Circle")
+		@shapeRadio("rectangle", checkedShapes, "Rectangle")
+		@shapeRadio("triangle", checkedShapes, "Triangle")
+		@shapeRadio("hexagon", checkedShapes, "Hexagon")
+	}
+}

@@ -1,0 +1,29 @@
+package peopleProvider
+
+import "github.com/EspenS93/filterview/cmd/web"
+import "strconv"
+
+templ detailPage(detailPerson person) {
+	@web.Base() {
+		@detail(detailPerson)
+	}
+}
+
+templ detail(detailPerson person) {
+	<div class="detail">
+		<div class="detail__header">
+			if detailPerson.Avatar != nil {
+				<div class="detail__header__image">
+					<img src={ *detailPerson.Avatar } alt={ detailPerson.FirstName + " " + detailPerson.LastName }/>
+				</div>
+			}
+			<div class="detail__header__info">
+				<h1>{ strconv.Itoa(detailPerson.ID) + ": " + detailPerson.FirstName + " " + detailPerson.LastName }</h1>
+				<p>{ detailPerson.Email }</p>
+			</div>
+		</div>
+		<div class="detail__content">
+			<p>content</p>
+		</div>
+	</div>
+}

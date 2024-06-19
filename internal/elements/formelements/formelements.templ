@@ -1,0 +1,29 @@
+package formelements
+
+templ CheckableInput(name string, value string, checked bool, inputType string, label string) {
+	<label class={ formElementClass() }>
+		{ label }
+		if checked {
+			<input type={ inputType } name={ name } value={ value } checked/>
+		} else {
+			<input type={ inputType } name={ name } value={ value }/>
+		}
+	</label>
+}
+
+css formElementClass() {
+	display: flex;
+	justify-content: space-between;
+}
+
+templ Fieldset() {
+	<fieldset class={ fieldsetFlexClass() }>
+		{ children... }
+	</fieldset>
+}
+
+css fieldsetFlexClass() {
+	display: flex;
+	row-gap: 1rem;
+	flex-direction: column;
+}
